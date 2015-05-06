@@ -13,20 +13,21 @@ var storage = process.env.DATABASE_STORAGE;
 
 //Cargar modelo ORM
 var Sequelize = require('sequelize');
-
+console.log('hola');
 //Usar BBDD SQlite:
 var sequelize = new Sequelize(DB_name, user, pwd,
    {dialect: protocol,
    	protocol: protocol,
    	port: port,
    	host: host,
-    storage:storage, //solo SQLite (.env)
-    omitNull: true
+    storage: storage, //solo SQLite (.env)
+    omitNull: true //solo POSTGRES
    }
 );
 
 //Importar la definición de la tabla Quiz en quiz.js
-var Quiz = sequelize.import(path.join(__dirname,'quiz'));
+var quiz_path = path.join(__dirname,'quiz');
+var Quiz = sequelize.import(quiz_path);
 exports.Quiz = Quiz; //exportar definición de tabla Quiz
 
 //sequelize.sync() crea e inicializa tabla de preguntas en DB
