@@ -13,7 +13,7 @@ var storage = process.env.DATABASE_STORAGE;
 
 //Cargar modelo ORM
 var Sequelize = require('sequelize');
-console.log('hola');
+
 //Usar BBDD SQlite:
 var sequelize = new Sequelize(DB_name, user, pwd,
    {dialect: protocol,
@@ -37,7 +37,11 @@ sequelize.sync().then(function() {
 		if(count === 0){ //la tabla se inicializa solo si esta vacia
           Quiz.create({ pregunta: 'Capital de Italia',
                         respuesta: 'Roma'
-                    }).then(function(){console.log('Base de datos inicializada')});
+                      });
+          Quiz.create({ pregunta: 'Capital de Portugal',
+                        respuesta: 'Lisboa'
+                     })
+          .then(function(){console.log('Base de datos inicializada')});
 		};
 	});
 });
