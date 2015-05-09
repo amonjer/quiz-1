@@ -1,7 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
+var app = express();
+//app.set('port', (process.env.PORT));
 
+
+//app.listen(app.get('port'), function() {
+//  console.log("Node app is running on port:" + app.get('port'))
+//})
 /* GET home page. */
 router.get('/', function(req, res) {
    
