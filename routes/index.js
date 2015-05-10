@@ -19,6 +19,8 @@ router.get('/author', function(req, res) {
   res.render('author', { title: 'Autores' });
 });
 
+//Autoload de comandos con :quizId
+router.param('quizId', quizController.load);
 /* GET question page. */
 //router.get('/quizes/question', quizController.question);
 
