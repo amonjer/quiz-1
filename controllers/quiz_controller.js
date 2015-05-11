@@ -18,6 +18,7 @@ exports.index= function(req, res) {
 		var busq = search.replace(/\s/g, '%');
 		busq='%' + busq + '%';
 		search=busq;
+	
 		models.Quiz.findAll({where: ["pregunta like ?", search]}).then(function(quizes) {
 			res.render('quizes/index.ejs', {quizes: quizes});
     } 
