@@ -11,12 +11,12 @@ var app = express();
 /* GET home page. */
 router.get('/', function(req, res) {
    
-  res.render('index', { title: 'Quiz' });
+  res.render('index', { title: 'Quiz', errors: [] });
 });
 
 /* GET authors page. */
 router.get('/author', function(req, res) {
-  res.render('author', { title: 'Autores' });
+  res.render('author', { title: 'Autores', errors: [] });
 });
 
 //Autoload de comandos con :quizId
