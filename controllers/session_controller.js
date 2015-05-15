@@ -1,3 +1,23 @@
+//MW de autologout de usuarios inactivos
+exports.autoLogout = function(req,res,next) {
+	if(req.session.user){
+		var d = new Date();
+		var time = d.getTime();
+		var aux = time - req.session.time;
+		if(time - req.session.time > 1200000){
+        	delete req.session.user;
+			res.redirect('/login');
+		
+		} else {
+			req.session.time= time;
+			next();
+		}
+	} else {
+		next();
+	}
+}
+
+
 //MW de autorizacion de accesos HTTP restringidos
 exports.loginRequired = function(req,res, next){
 	if(req.session.user) {
@@ -32,6 +52,9 @@ exports.create = function(req,res){
 		//Crear req.session.user y guardar campos id y username
 		// la sesion se define por las existencia de : req.session.user
 		req.session.user = {id:user.id, username:user.username};
+		var date = new Date();
+		var time = date.getTime();
+		req.session.time = time;
 
 		res.redirect(req.session.redir.toString()); //redireccion a path anterior a login
 
@@ -43,3 +66,5 @@ exports.destroy = function(req,res) {
 	delete req.session.user;
 	res.redirect(req.session.redir.toString()); //redirect a path anterior a login
 };
+
+
