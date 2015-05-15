@@ -37,7 +37,8 @@ exports.index= function(req, res) {
 
 //GET /quizes/:id
 
-exports.show = function(req,res) {	  
+exports.show = function(req,res) {	
+console.log("get quizes id");
 	res.render('quizes/show', { quiz: req.quiz, errors: []});
 };
 
