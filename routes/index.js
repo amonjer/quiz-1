@@ -4,6 +4,7 @@ var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 var statsController= require('../controllers/stats_controller');
+var userController = require('../controllers/user_controller');
 var app = express();
 //app.set('port', (process.env.PORT));
 
@@ -21,9 +22,10 @@ router.get('/author', sessionController.autoLogout, function(req, res) {
   res.render('author', { title: 'Autores', errors: [] });
 });
 
-//Autoload de comandos con :quizId
+//Autoload de comandos con ids
 router.param('quizId', quizController.load); //autoload :quizId
 router.param('commentId', commentController.load); // autoload :commentId
+router.param('userId', userController.load); // autoload :userId
 
 //Definicion de rutas de sesion
 router.get('/login', sessionController.new); // formulario login
@@ -51,6 +53,12 @@ router.get('/quizes/:quizId(\\d+)/comments/new', sessionController.autoLogout, c
 router.post('/quizes/:quizId(\\d+)/comments', sessionController.autoLogout, commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.autoLogout, sessionController.loginRequired, commentController.publish);
 
+//Definicion de rutas de cuenta
+router.get('/user', userController.new); //formulario sign in
+router.post('/user', userController.create); // registrar usuario
+router.get('/user/:userId(\\d+)/edit', sessionController.loginRequired, userController.edit);
+router.put('/user/:userId(\\d+)', sessionController.loginRequired, userController.update);
+router.delete('/user/:userId(\\d+)', sessionController.loginRequired, userController.destroy);
 
 module.exports = router;
 
