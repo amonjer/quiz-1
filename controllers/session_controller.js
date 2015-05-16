@@ -51,7 +51,7 @@ exports.create = function(req,res){
 
 		//Crear req.session.user y guardar campos id y username
 		// la sesion se define por las existencia de : req.session.user
-		req.session.user = {id:user.id, username:user.username};
+		req.session.user = {id:user.id, username:user.username, isAdmin:user.isAdmin};
 		var date = new Date();
 		var time = date.getTime();
 		req.session.time = time;
