@@ -31,6 +31,12 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index= function(req, res) {
+	var options ={};
+	if(req.user){ //req.user es creado por autoload de usuario
+		          // si la rua lleva el parámetro .quizId
+		options.where = {UserId: req.user.id}
+
+	}
 	var search=req.query.search;
 	if(search !== undefined){
 		var busq = search.replace(/\s/g, '%');
@@ -42,7 +48,7 @@ exports.index= function(req, res) {
     } 
     ).catch(function(error) {next(error);})
     } else {
-		models.Quiz.findAll().then(function(quizes) {
+		models.Quiz.findAll(options).then(function(quizes) {
 			res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	  	}
     	).catch(function(error) {next(error);})

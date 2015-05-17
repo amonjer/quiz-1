@@ -47,6 +47,7 @@ router.post('/quizes/create', sessionController.autoLogout, sessionController.lo
 router.get('/quizes/:quizId(\\d+)/edit', sessionController.autoLogout, sessionController.loginRequired,quizController.ownershipRequired, quizController.edit);
 router.put('/quizes/:quizId(\\d+)', sessionController.autoLogout, sessionController.loginRequired,quizController.ownershipRequired,multer({dest: './public/media/'}), quizController.update);
 router.delete('/quizes/:quizId(\\d+)', sessionController.autoLogout,sessionController.loginRequired,quizController.ownershipRequired, quizController.destroy);
+router.get('/user/:userId(\\d+)/quizes', sessionController.autoLogout, quizController.index);
 router.get('/quizes/statistics', sessionController.autoLogout, statsController.show);
 
 //Definicion de rutas de comentarios

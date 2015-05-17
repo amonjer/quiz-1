@@ -36,6 +36,7 @@ var Comment = sequelize.import(comment_path);
 var user_path = path.join(__dirname, 'user');
 var User = sequelize.import(user_path);
 
+
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
