@@ -4,8 +4,34 @@ Buscar preguntas: <br>
 <input type="submit" value="Buscar"/>
 </form>
 <table>
-<% var i; for (i=0; i < quizes.length; i++) { %>
+
+<% var i; var aux=0; for (i=0; i < quizes.length; i++) { %>
 	<tr>
+		<%if(session.user){
+			for(index in session.user.favs){
+				if(quizes[i].id === session.user.favs[index]){
+					aux =1;
+				}
+			}
+			if(aux===1){%>
+			    <td><form method="post" action="/user/<%=session.user.id%>/favourites/<%=quizes[i].id%>?_method=delete">
+					<button type="submit" onClick="return confirm('Deshacer favorito: <%= quizes[i].pregunta %>');">
+						<img src='/images/amarilla.png' width="20px">
+					</button>
+				</form></td>
+
+			<%} else {%>
+				 <td><form method="post" action="/user/<%=session.user.id%>/favourites/<%=quizes[i].id%>?_method=put">
+					<button type="submit" >
+						<img src='/images/gris.jpg' width="20px">
+					</button>
+				</form></td>
+
+			<%}%>
+			<%aux =0;%>
+
+		<%}%>
+       
 		<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
 		<%if(session.user){
 			if(session.user.isAdmin || session.user.id === quizes[i].UserId) {%>

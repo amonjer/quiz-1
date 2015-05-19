@@ -30,15 +30,22 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
-exports.index= function(req, res) {
+exports.index= function(req, res,next) {
 	var options ={};
 	if(req.user){ //req.user es creado por autoload de usuario
 		          // si la rua lleva el parámetro .quizId
 		options.where = {UserId: req.user.id}
-
+		
 	}
+	if(req.quizes){
+		quizes = req.quizes;
+		req.quizes = undefined;
+		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	} else {
+	console.log("search" + req.query.search);
 	var search=req.query.search;
-	if(search !== undefined){
+	if((search !== undefined)){
+
 		var busq = search.replace(/\s/g, '%');
 		busq='%' + busq + '%';
 		search=busq;
@@ -49,10 +56,14 @@ exports.index= function(req, res) {
     ).catch(function(error) {next(error);})
     } else {
 		models.Quiz.findAll(options).then(function(quizes) {
+
+			
+            console.log("renderiza en index");
 			res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	  	}
     	).catch(function(error) {next(error);})
     }
+	}
 };
 
 
@@ -136,3 +147,9 @@ exports.destroy = function(req, res) {
 		res.redirect('/quizes');
 	}).catch(function(error){next(error)});
 };
+
+exports.index2 = function(req,res) {
+		quizes = req.quizes;
+		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+	  	
+}

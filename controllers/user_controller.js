@@ -107,3 +107,13 @@ exports.destroy = function(req,res) {
 		res.redirect('/');
 	}).catch( function(error){next(error)});
 };
+
+// GET /users , saca el listado de usuarios donde ver sus favoritos
+exports.users = function(req,res) {
+	models.User.findAll().then(function(users){
+		res.render('user/users', {users: users, errors: []});
+	})
+
+	
+}
+
